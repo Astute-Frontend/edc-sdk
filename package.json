@@ -1,0 +1,26 @@
+{
+  "name": "edc-sdr",
+  "version": "1.0.0",
+  "main": "src/lib/index.js",
+  "repository": "git@192.222.1.150:Astute-Frontend/edc-sdr.git",
+  "author": "tang.huayu <1241040654@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "ts-node ./src/test/index.ts --project ./tsconfig.json"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "ref-napi": "^3.0.3",
+    "ref-struct-di": "^1.1.1",
+    "store": "^2.0.12"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.25",
+    "@types/ref-napi": "^3.0.4",
+    "@types/ref-struct-di": "^1.1.6",
+    "@types/store": "^2.0.2",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  }
+}
