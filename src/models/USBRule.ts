@@ -1,10 +1,10 @@
 import BaseModel from "../core/model/base";
 import { Model, Param } from "../core/model/decorator";
-import { numberValidate } from "../validates/common";
+import { numberStringValidate } from "../validates/common";
 import { VendorRule, IfclsRule, DevclsRule } from "./Rule";
 
 export interface IUSBRule {
-  listtype: number;
+  listtype: string;
   rulelist: Array<VendorRule | IfclsRule | DevclsRule>;
   exceptionlist: Array<VendorRule | IfclsRule | DevclsRule>;
 }
@@ -22,10 +22,10 @@ export default class USBRule extends BaseModel<IUSBRule> implements IUSBRule {
     this.exceptionlist = option.exceptionlist;
   }
 
-  @Param<number>({
+  @Param<string>({
     namespace: "listtype",
-    validate: numberValidate
-  }) listtype: number;
+    validate: numberStringValidate
+  }) listtype: string;
 
   @Param<Array<VendorRule | IfclsRule | DevclsRule>>({
     namespace: "rulelist"

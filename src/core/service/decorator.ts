@@ -37,25 +37,27 @@ export function Api(_option: string | IApiOption) {
 
     // 复杂项
     if (validate.isObject(_option)) {
-      const { namespace, type, option, requestParamIndex, responseParamIndex } = (_option as IApiOption);
+      const { namespace, type, option, before, requestParamIndex, responseParamIndex } = (_option as IApiOption);
 
       target.apiMap[key] = {
         namespace,
         type,
         option,
+        before,
         requestParamIndex,
         responseParamIndex
       };
 
       const apiFunction = descriptor.value;
       descriptor.value = async (...args: Array<any>) => {
-        console.log("descriptor arguments", args);
         if (!args[requestParamIndex || 0]) args[requestParamIndex || 0] = {};
         if (!args[responseParamIndex || 1]) args[responseParamIndex || 1] = {};
 
         const before = target.apiMap[key].before;
         if (before) {
+          console.log("before", args[requestParamIndex || 0] );
           args[requestParamIndex || 0] = await before(args[requestParamIndex || 0]);
+          console.log("before", args[requestParamIndex || 0] );
         }
 
         // if (!validate.isObject(args[requestParamIndex || 0])) {
@@ -71,15 +73,15 @@ export function Api(_option: string | IApiOption) {
             url: (target.namespace === "/" ? "" : target.namespace) + (target.apiMap[key].namespace === "/" ? "" : target.apiMap[key].namespace),
             method: (target.apiMap[key].option as IHTTPOption).methods
           }
-  
+
           if (args.length > 0) {
             deepMerge(requestOption, args[requestParamIndex || 0]);
           }
-  
+
           const result = await request(requestOption);
-  
+
           deepMerge(args[responseParamIndex || 1], result);
-  
+
           apiFunction(...args);
         } else if (target.apiMap[key].type === "CMD") {
           const stream = spawn((target.apiMap[key].option as ICMDOption).command, deepMerge((target.apiMap[key].option as ICMDOption).option, args[requestParamIndex || 0]));
@@ -88,7 +90,11 @@ export function Api(_option: string | IApiOption) {
         } else if (target.apiMap[key].type === "PIPE") {
           const socket = createConnection((target.apiMap[key].option as NetConnectOpts));
           socket?.once("connect", () => {
+            console.log("connected", args[requestParamIndex || 0] );
             socket?.write(args[requestParamIndex || 0]);
+          });
+          socket.on("error", (err) => {
+            console.log(err);
           });
           deepMerge(args[responseParamIndex || 1], socket);
           apiFunction(...args);
@@ -102,7 +108,6 @@ export function Api(_option: string | IApiOption) {
 
 export function ApiRequest() {
   return function (target: IServiceOption, propertyName: string, index: number) {
-    console.log("ApiRequest", target, propertyName, index);
     if (!target.apiMap) target.apiMap = {};
     if (!target.apiMap[propertyName] || !validate.isObject(target.apiMap[propertyName])) {
       target.apiMap[propertyName] = {
@@ -115,7 +120,6 @@ export function ApiRequest() {
 
 export function ApiResponse() {
   return function (target: IServiceOption, propertyName: string, index: number) {
-    console.log("ApiResponse", target, propertyName, index);
     if (!target.apiMap) target.apiMap = {};
     if (!target.apiMap[propertyName] || !validate.isObject(target.apiMap[propertyName])) {
       target.apiMap[propertyName] = {

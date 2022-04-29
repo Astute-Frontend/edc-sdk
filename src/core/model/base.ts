@@ -45,7 +45,6 @@ export default class BaseModel<T> {
   }
 
   read?() {
-    console.log("read", this);
     if (this.namespace) {
       if (this.noDB) {
         return this.__dbData;

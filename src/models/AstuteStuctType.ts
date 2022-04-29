@@ -25,14 +25,16 @@ export default class AstuteStuctType implements IAstuteStuctType {
   
   private headStructObject!: struct.StructObject<any>;
 
+  bufferHead!: Buffer;
+
   initHead () {
     const StructType = struct(ref);
 
     const Head = StructType<any>(new AstuteStructTypeHeader());
 
-    const bufferHead = new Buffer(Head.size);
+    this.bufferHead = new Buffer(Head.size);
 
-    this.headStructObject = new Head(bufferHead);
+    this.headStructObject = new Head(this.bufferHead);
   }
 
   getBufferMessage () {
@@ -40,6 +42,9 @@ export default class AstuteStuctType implements IAstuteStuctType {
     this.headStructObject.len = this.bufferBody.toString("ascii").length;
     this.headStructObject.state = 0;
 
-    return Buffer.concat([this.headStructObject, this.bufferBody])
+    const bufferList = [this.bufferBody, this.bufferBody];
+    console.log("getBufferMessage buffer list", bufferList);
+
+    return Buffer.concat(bufferList)
   }
 }

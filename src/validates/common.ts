@@ -12,6 +12,16 @@ export function numberValidate(count: number) {
   });
 }
 
+export function numberStringValidate(count: string) {
+  const countNumber = parseInt(count);
+
+  if (!countNumber) {
+    return Promise.reject(new Error("Incorrect number format"));
+  }
+
+  return portValidate(countNumber);
+}
+
 export function ipValidate(ip: string) {
   return new Promise((resolve, reason) => {
     if (!validate.isString(ip)) {
@@ -34,4 +44,14 @@ export function portValidate(port: number) {
       resolve({});
     }
   });
+}
+
+export function portStringValidate(port: string) {
+  const portNumber = parseInt(port);
+
+  if (!portNumber) {
+    return Promise.reject(new Error("Incorrect port format"));
+  }
+
+  return portValidate(portNumber);
 }

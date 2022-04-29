@@ -1,14 +1,14 @@
 import BaseModel from "../core/model/base";
 import { Model, Param } from "../core/model/decorator";
 import USBRule from "./USBRule";
-import { ipValidate, portValidate, stringValidate } from "../validates/common";
+import { ipValidate, portStringValidate, portValidate, stringValidate } from "../validates/common";
 
 export interface IDesktop {
   name: string;
   ip: string;
-  port: number;
+  port: string;
   gwip?: string;
-  gwport?: number;
+  gwport?: string;
   username: string;
   pwd: string;
   usbrule: USBRule;
@@ -41,20 +41,20 @@ export default class Desktop extends BaseModel<IDesktop> implements IDesktop {
     validate: ipValidate
   }) ip: string;
 
-  @Param<number>({
+  @Param<string>({
     namespace: "port",
-    validate: portValidate
-  }) port: number;
+    validate: portStringValidate
+  }) port: string;
 
   @Param<string>({
     namespace: "gwip",
     validate: ipValidate
   }) gwip?: string;
 
-  @Param<number>({
+  @Param<string>({
     namespace: "gwport",
-    validate: portValidate
-  }) gwport?: number;
+    validate: portStringValidate
+  }) gwport?: string;
 
   
   @Param<string>({

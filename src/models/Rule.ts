@@ -1,28 +1,28 @@
 import BaseModel from "../core/model/base";
 import { Model, Param } from "../core/model/decorator";
-import { numberValidate } from "../validates/common";
+import { numberStringValidate, numberValidate } from "../validates/common";
 
 export interface IVendorRule {
-  type: number;
-  vendor: number;
-  product: number;
-  enable?: number;
+  type: string;
+  vendor: string;
+  product: string;
+  enable?: string;
 }
 
 export interface IIfclsRule {
-  type: number;
-  ifcls: number;
-  ifsubcls: number;
-  ifpro: number;
-  enable?: number;
+  type: string;
+  ifcls: string;
+  ifsubcls: string;
+  ifpro: string;
+  enable?: string;
 }
 
 export interface IDevclsRule {
-  type: number;
-  devcls: number;
-  devsubcls: number;
-  devpro: number;
-  enable?: number;
+  type: string;
+  devcls: string;
+  devsubcls: string;
+  devpro: string;
+  enable?: string;
 }
 
 @Model({
@@ -38,25 +38,25 @@ export class VendorRule extends BaseModel<IVendorRule> implements IVendorRule {
     this.enable = option.enable;
   }
 
-  @Param<number>({
+  @Param<string>({
     namespace: "type",
-    validate: numberValidate
-  }) type: number;
+    validate: numberStringValidate
+  }) type: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "vendor",
-    validate: numberValidate
-  }) vendor: number;
+    validate: numberStringValidate
+  }) vendor: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "product",
-    validate: numberValidate
-  }) product: number;
+    validate: numberStringValidate
+  }) product: string;
 
-  @Param<number>({
+  @Param<string>({
     namespace: "enable",
-    validate: numberValidate
-  }) enable?: number;
+    validate: numberStringValidate
+  }) enable?: string;
 }
 
 @Model({
@@ -73,30 +73,30 @@ export class IfclsRule extends BaseModel<IIfclsRule> implements IIfclsRule {
     this.enable = option.enable;
   }
 
-  @Param<number>({
+  @Param<string>({
     namespace: "type",
-    validate: numberValidate
-  }) type: number;
+    validate: numberStringValidate
+  }) type: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "ifcls",
-    validate: numberValidate
-  }) ifcls: number;
+    validate: numberStringValidate
+  }) ifcls: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "ifsubcls",
-    validate: numberValidate
-  }) ifsubcls: number;
+    validate: numberStringValidate
+  }) ifsubcls: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "ifpro",
-    validate: numberValidate
-  }) ifpro: number;
+    validate: numberStringValidate
+  }) ifpro: string;
 
-  @Param<number>({
+  @Param<string>({
     namespace: "enable",
-    validate: numberValidate
-  }) enable?: number;
+    validate: numberStringValidate
+  }) enable?: string;
 }
 
 @Model({
@@ -113,28 +113,28 @@ export class DevclsRule extends BaseModel<IDevclsRule> implements IDevclsRule {
     this.enable = option.enable;
   }
 
-  @Param<number>({
+  @Param<string>({
     namespace: "type",
-    validate: numberValidate
-  }) type: number;
+    validate: numberStringValidate
+  }) type: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "devcls",
-    validate: numberValidate
-  }) devcls: number;
+    validate: numberStringValidate
+  }) devcls: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "devsubcls",
-    validate: numberValidate
-  }) devsubcls: number;
+    validate: numberStringValidate
+  }) devsubcls: string;
   
-  @Param<number>({
+  @Param<string>({
     namespace: "devpro",
-    validate: numberValidate
-  }) devpro: number;
+    validate: numberStringValidate
+  }) devpro: string;
 
-  @Param<number>({
+  @Param<string>({
     namespace: "enable",
-    validate: numberValidate
-  }) enable?: number;
+    validate: numberStringValidate
+  }) enable?: string;
 }

@@ -42,8 +42,6 @@ export function Model(option: string | IModelOption) {
 
 export function Param<T>(option: string | IParamOption<T>) {
   return function (target: any, propertyName: string) {
-    console.log("Param", target, target[propertyName], target.prototype);
-
     if (!target.paramsDescriptorMap) {
       target.paramsDescriptorMap = {}
     }
@@ -75,9 +73,6 @@ export function Param<T>(option: string | IParamOption<T>) {
         } else {
           dbData = target.read();
         }
-        
-
-        console.log(`Get: ${propertyName} => ${(dbData && dbData[paramOption.namespace]) || paramOption.default}`);
 
         let result = (dbData && dbData[paramOption.namespace]) || paramOption.default || undefined;
 
@@ -90,8 +85,6 @@ export function Param<T>(option: string | IParamOption<T>) {
 
       // 属性写入访问器
       const setter = async (newVal: T) => {
-        console.log(`Set: ${propertyName} => ${newVal}`);
-
         // 如果配置了验证规则，这里要做验证
         if (paramOption.validate) {
           try {

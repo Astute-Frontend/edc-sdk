@@ -6,7 +6,8 @@
   "author": "tang.huayu <1241040654@qq.com>",
   "license": "MIT",
   "scripts": {
-    "serve": "ts-node ./src/test/index.ts --project ./tsconfig.json"
+    "build": "tsc --project ./tsconfig.json",
+    "serve": "nodemon --watch src/**/* -e ts --exec 'tsc --project ./tsconfig.json'&'node ./dist/test/index.js'"
   },
   "dependencies": {
     "axios": "^0.26.1",
